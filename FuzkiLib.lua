@@ -587,4 +587,3 @@ function FuzkiLib:Create(name, gameName)
 end
 return FuzkiLibrary
 
-end)
