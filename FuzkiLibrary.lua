@@ -253,6 +253,7 @@ function FuzkiLib:Create(name, gameName)
             TextButton.MouseButton1Click:Connect(function()
                 callback()
             end)
+            end
 
             function Items:CreateToggle(info, callback)
                 toggle = toggle or "Toggle"
@@ -585,5 +586,5 @@ function FuzkiLib:Create(name, gameName)
     end
     return InsideFuzki
 end
---fixed
+--fixed 1
 return FuzkiLib
