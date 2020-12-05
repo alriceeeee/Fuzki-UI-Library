@@ -587,25 +587,3 @@ function FuzkiLib:Create(name, gameName)
 end
 
 return FuzkiLib
-
-local Main = FuzkiLib:Create("Fuzki", "Baseplate")
-
-local Offff = Main:CreateSection("Other")
-local Ffff = Main:CreateSection("Review")
-
-Ffff:CreateLabel("Fuzki UI Library")
-Ffff:CreateButton("Print me", "This is cool info", function()
-    print("Wow, printed")
-end)
-Ffff:CreateToggle("Epic toggle", function(state)
-    print(state)
-end)
-Ffff:CreateBind("Keybind print", Enum.KeyCode.F, function()
-    print("Oh yes")
-end)
-Ffff:CreateTextBox("Prints whats inside of textbox", "Type here", function(v)
-    print(v)
-end)
-Ffff:CreateSlider(16, 500, "Prints the value", function(val)
-    print(val)
-end)
