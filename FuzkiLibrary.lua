@@ -199,8 +199,7 @@ function FuzkiLib:Create(name, gameName)
             tglLine.BorderSizePixel = 0
             tglLine.Position = UDim2.new(0.0390804596, 0, 0.980000019, 0)
             tglLine.Size = UDim2.new(0, 401, 0, 1)
-            end
-
+        end
         function Items:CreateButton(text, info, callback)
             text = text or "Button Epic"
             info = info or "Epic Info"
@@ -254,7 +253,6 @@ function FuzkiLib:Create(name, gameName)
             TextButton.MouseButton1Click:Connect(function()
                 callback()
             end)
-                end
 
             function Items:CreateToggle(info, callback)
                 toggle = toggle or "Toggle"
@@ -342,8 +340,8 @@ function FuzkiLib:Create(name, gameName)
                         playoff:Play()
                     end
                 end)
-                end
-
+            end
+        end
         function Items:CreateBind(info, first, callback)
             info = info or "Info"
             callback = callback or function() end
@@ -412,7 +410,6 @@ function FuzkiLib:Create(name, gameName)
                 end
             end)
         end
-
         function Items:CreateTextBox(info, placeholder, callback)
             info = info or "Info"
             placeholder = placeholder or "Type Here"
@@ -477,7 +474,7 @@ function FuzkiLib:Create(name, gameName)
                 callback(TextBox.Text)
                 TextBox.Text = ""
             end)
-                            end
+        end
         function Items:CreateSlider(minvalue, maxvalue, info, callback)
             minvalue = minvalue or 0
             maxvalue = maxvalue or 500
@@ -583,10 +580,32 @@ function FuzkiLib:Create(name, gameName)
                     end
                 end)
             end)
-            end
         end
     return Items
     end
     return InsideFuzki
 end
+
 return FuzkiLib
+
+local Main = FuzkiLib:Create("Fuzki", "Baseplate")
+
+local Offff = Main:CreateSection("Other")
+local Ffff = Main:CreateSection("Review")
+
+Ffff:CreateLabel("Fuzki UI Library")
+Ffff:CreateButton("Print me", "This is cool info", function()
+    print("Wow, printed")
+end)
+Ffff:CreateToggle("Epic toggle", function(state)
+    print(state)
+end)
+Ffff:CreateBind("Keybind print", Enum.KeyCode.F, function()
+    print("Oh yes")
+end)
+Ffff:CreateTextBox("Prints whats inside of textbox", "Type here", function(v)
+    print(v)
+end)
+Ffff:CreateSlider(16, 500, "Prints the value", function(val)
+    print(val)
+end)
