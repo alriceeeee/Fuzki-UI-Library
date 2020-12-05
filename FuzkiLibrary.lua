@@ -580,11 +580,10 @@ function FuzkiLib:Create(name, gameName)
                     end
                 end)
             end)
-            end
         end
     return Items
     end
     return InsideFuzki
 end
---fixed 1
+--fixed 0
 return FuzkiLib
