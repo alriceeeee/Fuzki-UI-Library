@@ -341,7 +341,6 @@ function FuzkiLib:Create(name, gameName)
                     end
                 end)
             end
-        end
         function Items:CreateBind(info, first, callback)
             info = info or "Info"
             callback = callback or function() end
@@ -580,10 +579,11 @@ function FuzkiLib:Create(name, gameName)
                     end
                 end)
             end)
+            end
         end
     return Items
     end
     return InsideFuzki
 end
-
+--fixed
 return FuzkiLib
