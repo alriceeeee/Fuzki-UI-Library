@@ -108,6 +108,41 @@ function FuzkiLib:Create(name, gameName)
     title.TextSize = 18.000
     title.TextXAlignment = Enum.TextXAlignment.Left
 
+    -- Add after the title element and before the elements frame
+    local minimizeBtn = Instance.new("TextButton")
+    local minimizeCorner = Instance.new("UICorner")
+
+    minimizeBtn.Name = "minimizeBtn"
+    minimizeBtn.Parent = MainLib
+    minimizeBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    minimizeBtn.Position = UDim2.new(0.92, 0, 0.02, 0)
+    minimizeBtn.Size = UDim2.new(0, 25, 0, 25)
+    minimizeBtn.Font = Enum.Font.GothamBold
+    minimizeBtn.Text = "-"
+    minimizeBtn.TextColor3 = Color3.fromRGB(212, 212, 212)
+    minimizeBtn.TextSize = 20.000
+
+    minimizeCorner.CornerRadius = UDim.new(0, 3)
+    minimizeCorner.Name = "minimizeCorner"
+    minimizeCorner.Parent = minimizeBtn
+
+    -- Add the minimize functionality
+    local minimized = false
+    minimizeBtn.MouseButton1Click:Connect(function()
+        minimized = not minimized
+        if minimized then
+            elements.Visible = false
+            tabMain.Visible = false
+            MainLib.Size = UDim2.new(0, 469, 0, 44) -- Shrink to just show header
+            minimizeBtn.Text = "+"
+        else
+            elements.Visible = true
+            tabMain.Visible = true
+            MainLib.Size = UDim2.new(0, 469, 0, 484) -- Restore original size
+            minimizeBtn.Text = "-"
+        end
+    end)
+
     elements.Name = "elements"
     elements.Parent = MainLib
     elements.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
