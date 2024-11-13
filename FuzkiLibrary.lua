@@ -1,11 +1,22 @@
 local FuzkiLib = {}
 
+-- Add this at the start, before any other code
+for i,v in next, game.CoreGui:GetChildren() do
+    if v.Name == "Fuzki" then
+        v:Destroy()
+    end
+end
+
 function FuzkiLib:Create(name, gameName)
     name = name or "Name"
     gameName = gameName or "Game Name"
     local InsideFuzki = {}
 
     local Fuzki = Instance.new("ScreenGui")
+    Fuzki.Name = "Fuzki"
+    Fuzki.Parent = game.CoreGui
+    Fuzki.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
     local MainLib = Instance.new("Frame")
     local headerLine = Instance.new("Frame")
     local mainCorner = Instance.new("UICorner")
@@ -17,10 +28,6 @@ function FuzkiLib:Create(name, gameName)
     local elements = Instance.new("Frame")
     local elementsCorner = Instance.new("UICorner")
     local elementFolder = Instance.new("Folder")
-
-    Fuzki.Name = "name"
-    Fuzki.Parent = game.CoreGui
-    Fuzki.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
     MainLib.Name = "MainLib"
     MainLib.Parent = Fuzki
@@ -587,37 +594,49 @@ function FuzkiLib:Create(name, gameName)
 
             local mouse = game.Players.LocalPlayer:GetMouse()
             local uis = game:GetService("UserInputService")
-            local Value;
+            local Value = minvalue
+
+            local function updateSlider(mouseX)
+                local sliderPosition = math.clamp(mouseX - sliderBtn.AbsolutePosition.X, 0, 128)
+                local percentage = sliderPosition / 128
+                Value = math.floor(minvalue + ((maxvalue - minvalue) * percentage))
+                
+                -- Update visual elements
+                Frame.Size = UDim2.new(0, sliderPosition, 0, 10)
+                sliderVal.Text = Value.."/"..maxvalue
+                
+                pcall(callback, Value)
+            end
 
             sliderBtn.MouseButton1Down:Connect(function()
-                Value = math.floor((((tonumber(maxvalue) - tonumber(minvalue)) / 128) * Frame.AbsoluteSize.X) + tonumber(minvalue)) or 0
-                pcall(function()
-                    callback(Value)
+                local moveConnection
+                local releaseConnection
+                
+                moveConnection = mouse.Move:Connect(function()
+                    updateSlider(mouse.X)
                 end)
-                Frame.Size = UDim2.new(0, math.clamp(mouse.X - Frame.AbsolutePosition.X, 0, 128), 0, 10)
-                moveconnection = mouse.Move:Connect(function()
-                    sliderVal.Text = Value.."/"..maxvalue
-                    Value = math.floor((((tonumber(maxvalue) - tonumber(minvalue)) / 128) * Frame.AbsoluteSize.X) + tonumber(minvalue))
-                    pcall(function()
-                        callback(Value)
-                    end)
-                    Frame.Size = UDim2.new(0, math.clamp(mouse.X - Frame.AbsolutePosition.X, 0, 128), 0, 10)
-                end)
-                releaseconnection = uis.InputEnded:Connect(function(Mouse)
-                    if Mouse.UserInputType == Enum.UserInputType.MouseButton1 then
-                        Value = math.floor((((tonumber(maxvalue) - tonumber(minvalue)) / 128) * Frame.AbsoluteSize.X) + tonumber(minvalue))
-                        pcall(function()
-                            callback(Value)
-                        end)
-                        Frame.Size = UDim2.new(0, math.clamp(mouse.X - Frame.AbsolutePosition.X, 0, 128), 0, 10)
-                        moveconnection:Disconnect()
-                        releaseconnection:Disconnect()
+                
+                releaseConnection = uis.InputEnded:Connect(function(input)
+                    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                        moveConnection:Disconnect()
+                        releaseConnection:Disconnect()
                     end
                 end)
+                
+                -- Initial update
+                updateSlider(mouse.X)
             end)
         end
     return Items
     end
     return InsideFuzki
 end
+
+function FuzkiLib:Reload()
+    if existingGui then
+        existingGui:Destroy()
+        existingGui = nil
+    end
+end
+
 return FuzkiLib

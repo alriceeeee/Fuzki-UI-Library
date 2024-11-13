@@ -1,8 +1,13 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/alriceeeee/Fuzki-UI-Library/refs/heads/main/FuzkiLibrary.lua"))() -- Gets the Library
-local Main = Library:Create("Fuzki", "Baseplate") -- Creates Main Window | Fuzki (Hub Name) | Baseplate (Game Name)
 
-local Other = Main:CreateSection("Other") | Creates section with name Other
-local Preview = Main:CreateSection("Preview") [size=large]Creates another section with name Preview[/size]
+-- Create the UI first
+local Main = Library:Create("Fuzki", "Baseplate")
+
+-- Now we can safely reload if needed
+Library:Reload()
+
+local Other = Main:CreateSection("Other") 
+local Preview = Main:CreateSection("Preview") 
 
 Preview:CreateLabel("Text Label") -- Text Label with text inside of " "
 Preview:CreateButton("Button Text", "Button Info", function() -- creates button (CreateButton)
@@ -17,6 +22,6 @@ end)
 Preview:CreateTextBox("TextBox Info", "PlaceHolder", function(v) -- v= gets textbox text after enter pressed
 print(v)
 end)
-Preview:CreateSlider(16, 500, "Slider Info", function(val) -- 16 (Min value) | 500 (Max value)
+Preview:CreateSlider(16, 500, "Slider Info", function(val)
 print(val) -- prints value 
 end)
