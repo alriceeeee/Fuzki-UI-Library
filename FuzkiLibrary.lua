@@ -603,7 +603,8 @@ function FuzkiLib:Create(name, gameName)
             sliderVal.TextSize = 16.000
             sliderVal.TextXAlignment = Enum.TextXAlignment.Right
 
-            local mouse = game.Players.LocalPlayer:GetMouse()
+            local Players = game:GetService("Players")
+            local mouse = Players.LocalPlayer:GetMouse()
             local uis = game:GetService("UserInputService")
             local Value = minvalue
 
