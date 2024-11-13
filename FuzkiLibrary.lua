@@ -543,7 +543,6 @@ function FuzkiLib:Create(name, gameName)
             local buttonCorner = Instance.new("UICorner")
             local sliderVal = Instance.new("TextLabel")
 
-
             sliderFrame.Name = "sliderFrame"
             sliderFrame.Parent = elementContainer
             sliderFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -609,34 +608,36 @@ function FuzkiLib:Create(name, gameName)
             local Value = minvalue
 
             local function updateSlider(mouseX)
-                local sliderPosition = math.clamp(mouseX - sliderBtn.AbsolutePosition.X, 0, 128)
-                local percentage = sliderPosition / 128
+                local sliderPosition = math.clamp(mouseX - sliderBtn.AbsolutePosition.X, 0, sliderBtn.AbsoluteSize.X)
+                local percentage = sliderPosition / sliderBtn.AbsoluteSize.X
                 Value = math.floor(minvalue + ((maxvalue - minvalue) * percentage))
                 
                 -- Update visual elements
-                Frame.Size = UDim2.new(0, sliderPosition, 0, 10)
+                Frame.Size = UDim2.new(percentage, 0, 1, 0)
                 sliderVal.Text = Value.."/"..maxvalue
                 
-                pcall(callback, Value)
+                callback(Value)
             end
 
+            local dragging = false
+            
             sliderBtn.MouseButton1Down:Connect(function()
-                local moveConnection
-                local releaseConnection
-                
-                moveConnection = mouse.Move:Connect(function()
-                    updateSlider(mouse.X)
-                end)
-                
-                releaseConnection = uis.InputEnded:Connect(function(input)
-                    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-                        moveConnection:Disconnect()
-                        releaseConnection:Disconnect()
-                    end
-                end)
+                dragging = true
                 
                 -- Initial update
                 updateSlider(mouse.X)
+            end)
+            
+            mouse.Move:Connect(function()
+                if dragging then
+                    updateSlider(mouse.X)
+                end
+            end)
+            
+            uis.InputEnded:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                    dragging = false
+                end
             end)
         end
     return Items

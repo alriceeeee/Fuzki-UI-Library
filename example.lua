@@ -19,6 +19,6 @@ end)
 Preview:CreateTextBox("TextBox Info", "PlaceHolder", function(v) -- v= gets textbox text after enter pressed
 print(v)
 end)
-Preview:CreateSlider(16, 500, "Slider Info", function(val)
-print(val) -- prints value 
+Preview:CreateSlider(0, 100, "Slider Example", function(value) -- creates slider (min, max, info, callback)
+    print("Slider value:", value)
 end)
