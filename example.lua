@@ -1,15 +1,12 @@
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/alriceeeee/Fuzki-UI-Library/refs/heads/main/FuzkiLibrary.lua"))() -- Gets the Library
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/alriceeeee/Fuzki-UI-Library/refs/heads/main/FuzkiLibrary.lua"))()
 
--- Create the UI first
+-- This will automatically destroy any existing UI before creating a new one
 local Main = Library:Create("Fuzki", "Baseplate")
-
--- Now we can safely reload if needed
-Library:Reload()
 
 local Other = Main:CreateSection("Other") 
 local Preview = Main:CreateSection("Preview") 
 
-Preview:CreateLabel("Text Label") -- Text Label with text inside of " "
+Preview:CreateLabel("Text Label")
 Preview:CreateButton("Button Text", "Button Info", function() -- creates button (CreateButton)
    print("Wow, printed")
 end)

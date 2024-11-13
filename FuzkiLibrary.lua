@@ -1,13 +1,25 @@
-local FuzkiLib = {}
+local FuzkiLib = {
+    ["Options"] = {
+        ["Size"] = 0.9
+    }
+}
 
--- Add this at the start, before any other code
+-- Add this cleanup at the start
 for i,v in next, game.CoreGui:GetChildren() do
     if v.Name == "Fuzki" then
         v:Destroy()
     end
 end
 
+-- Add this cleanup before creating new UI
 function FuzkiLib:Create(name, gameName)
+    -- Destroy any existing UI first
+    for i,v in next, game.CoreGui:GetChildren() do
+        if v.Name == "Fuzki" then
+            v:Destroy()
+        end
+    end
+
     name = name or "Name"
     gameName = gameName or "Game Name"
     local InsideFuzki = {}
